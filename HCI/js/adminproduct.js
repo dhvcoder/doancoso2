@@ -1,14 +1,12 @@
-const id_categogy = new URLSearchParams(window.location.search).get("id");
 let currentPage = 1;
 var itemsPerPage = 4;
 
-function loadData(page) {
+function loadData(id_categogy, page) {
   $.ajax({
     url: `http://localhost:7070/getlist/${id_categogy}/${page}`,
     type: "GET",
   })
     .done(function (response) {
-      console.log(response);
       $(".t-body").empty(); // Clear previous data
       let isFirstOptionAdded = false; // Biến để kiểm tra xem đã thêm option hay chưa
       if (Array.isArray(response.data)) {
@@ -16,13 +14,12 @@ function loadData(page) {
 
         response.data.forEach((value, idx) => {
           let stt = sttStart + idx;
-          let selectOption = "";
           let html = `<tr>
             <td>${stt}</td>
             <td><img class="img-fluid rounded" src="https://drive.google.com/uc?id=${value.img}" alt=""></td>
             <td>${value.ten}</td>
             <td>${value.tendanhmuc}</td>
-            <td>Jhone Steben</td>
+            <td>${value.tentacgia}</td>
             <td>${value.gia}$</td>                                      
             <td>
                 <div class="flex align-items-center list-user-action">
@@ -31,12 +28,6 @@ function loadData(page) {
                 </div>
             </td>
           </tr>`;
-          if (!isFirstOptionAdded) {
-            selectOption = `<option value="${value.id_danhmuc}">${value.tendanhmuc}</option>`;
-            $("#select-category").append(selectOption);
-            isFirstOptionAdded = true;
-          }
-          console.log(selectOption);
           $(".t-body").append(html);
         });
       }
@@ -51,6 +42,12 @@ function loadData(page) {
       console.log("Error:", error);
     });
 }
+
+// Load initial data
+const id_categogy = new URLSearchParams(window.location.search).get("id");
+loadData(id_categogy , currentPage);
+
+
 
 function updatePagination(totalPages) {
   $(".pagination").empty();
@@ -92,9 +89,15 @@ function updatePagination(totalPages) {
     });
 }
 
-// Load initial data
-loadData(currentPage);
 
+var editorUp;
+ClassicEditor.create(document.querySelector("#editormota"))
+  .then((newEditor) => {
+    editorUp = newEditor;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
 // add-product
 var formadd = document.getElementById("form-add-product");
@@ -112,8 +115,10 @@ $(formadd).submit(function (e) {
     contentType: false,
     success: function (data) {
       // Xử lý dữ liệu trả về từ server nếu cần
+      
       console.log("Success:", data);
-       location.reload();
+      loadData(data, currentPage);
+      location.reload();
     },
     error: function (error) {
       // Xử lý lỗi nếu có
@@ -122,3 +127,40 @@ $(formadd).submit(function (e) {
   });
 });
 
+function showAuthor() {
+  $.ajax({
+    url: `http://localhost:7070/v3/getAuthor`,
+    type: "GET",
+  })
+    .done(function (data) {
+      let selectOption = "";
+      data.forEach((value) => {
+        selectOption += `<option value="${value.id_tacgia}">${value.tentacgia}</option>`;
+      });
+      $("#select-author").append(selectOption);
+    })
+    .fail(function (xhr, status, error) {
+      // Xử lý lỗi nếu có khi yêu cầu thất bại
+      console.error("Error:", status, error);
+    });
+}
+showAuthor();
+
+function ShowCategory() {
+  $.ajax({
+    url: "http://localhost:7070/v1/getcategory",
+    type: "GET",
+  })
+    .done(function (data) {
+      let selectOption = "";
+      data.forEach((value) => {
+        selectOption += `<option value="${value.id}">${value.tendanhmuc}</option>`;
+      });
+      $("#select-category").append(selectOption);
+    })
+    .fail(function (xhr, status, error) {
+      // Xử lý lỗi nếu có khi yêu cầu thất bại
+      console.error("Error:", status, error);
+    });
+}
+ShowCategory();

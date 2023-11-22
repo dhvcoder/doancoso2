@@ -1,13 +1,12 @@
-
 function showAuthor() {
-    $.ajax({
-      url: `http://localhost:7070/v3/getAuthor`,
-      type: "GET",
-    })
-      .done(function (data) {
-        let stt = 1;
-        data.forEach((value) => {
-          let html = `<tr>
+  $.ajax({
+    url: `http://localhost:7070/v3/getAuthor`,
+    type: "GET",
+  })
+    .done(function (data) {
+      let stt = 1;
+      data.forEach((value) => {
+        let html = `<tr>
                         <td>${stt++}</td>
                         <td>${value.tentacgia}</td>
                         <td>
@@ -15,22 +14,28 @@ function showAuthor() {
                         </td>
                         <td>
                             <div class="flex align-items-center list-user-action">
-                                <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" href="admin-add-category.html"><i class="ri-pencil-line"></i></a>
-                                <a class="bg-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Xoá" href="#"><i class="ri-delete-bin-line"></i></a>
+                                <button type="button" class="btn btn-sm btn-warning mx-1 px-1 py-1" data-toggle="modal" data-target="#update" onclick="GetByID(${
+                                  value.id_tacgia
+                                })">
+                               <i class="ri-pencil-line"></i>
+                            </button>
+                                <button type="button" class="btn btn-sm btn-warning mx-1 px-1 py-1" onclick="openConfirmationModal(${
+                                  value.id_tacgia
+                                })" data-toggle="modal" data-target="#modalDelete">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
                             </div>
                         </td>
                     </tr>`;
-          $(".t-body-author").append(html);
-        });
-      })
-      .fail(function (xhr, status, error) {
-        // Xử lý lỗi nếu có khi yêu cầu thất bại
-        console.error("Error:", status, error);
+        $(".t-body-author").append(html);
       });
+    })
+    .fail(function (xhr, status, error) {
+      // Xử lý lỗi nếu có khi yêu cầu thất bại
+      console.error("Error:", status, error);
+    });
 }
 showAuthor();
-
-
 
 $(document).ready(function () {
   // Initialize ClassicEditor
@@ -58,7 +63,7 @@ $(document).ready(function () {
             mota: mota,
           },
           success: function (data) {
-             location.reload();
+            location.reload();
           },
           error: function () {
             console.log("loi");
@@ -68,3 +73,77 @@ $(document).ready(function () {
     });
 });
 
+var editorUp;
+ClassicEditor.create(document.querySelector("#motaup"))
+  .then((newEditor) => {
+    editorUp = newEditor;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+function GetByID(id) {
+  // clearModal();
+  $.ajax({
+    url: `http://localhost:7070/v3/getByID/${id}`,
+    type: "GET",
+  })
+    .done(function (data) {
+      data.forEach((value) => {
+        $("#id_tentacgiaup").val(value.id_tacgia);
+        $("#tentacgiaup").val(value.tentacgia);
+        editorUp.setData(value.motaAuthor);
+      });
+    })
+    .fail(function (xhr, status, error) {
+      // Handle errors if the request fails
+      console.error("Error:", status, error);
+    });
+}
+
+// delete category
+
+function openConfirmationModal(id) {
+  console.log(id);
+  $(".button-delete").empty();
+  let modalDelete = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-danger" onclick="deleteAuthor(${id})" id="confirmDelete">Xoá</button>`;
+  $(".button-delete").append(modalDelete);
+}
+
+function deleteAuthor(id) {
+  $.ajax({
+    url: `http://localhost:7070/v3/deleteAuthor/${id}`,
+    type: "DELETE",
+    success: function (data) {
+      location.reload();
+    },
+    error: function (xhr, status, error) {
+      console.log(xhr.status + ": " + xhr.statusText);
+      // Handle the error appropriately
+    },
+  });
+}
+
+$("#Update").submit(function (e) {
+  e.preventDefault();
+  const id = $("#id_tentacgiaup").val();
+  const tentacgia = $("#tentacgiaup").val();
+  const mota = editorUp.getData();
+  // console.log(tentacgia, mota , id);
+
+  $.ajax({
+    url: `http://localhost:7070/v3/updateAuthor/${id}`,
+    type: "PUT",
+    data: {
+      id: id,
+      tentacgia: tentacgia,
+      mota: mota,
+    },
+    success: function (data) {
+      location.reload();
+    },
+    error: function () {
+      console.log("loi");
+    },
+  });
+});

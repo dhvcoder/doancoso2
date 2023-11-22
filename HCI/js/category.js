@@ -16,13 +16,17 @@ $.ajax({
                               })  >
                                <i class="ri-pencil-line"></i>
                             </button>
-                             <button type="button" class="btn btn-sm btn-warning mx-1 px-1 py-1" onclick="openConfirmationModal(${value.id})" data-toggle="modal" data-target="#modalDelete">
+                             <button type="button" class="btn btn-sm btn-warning mx-1 px-1 py-1" onclick="openConfirmationModal(${
+                               value.id
+                             })" data-toggle="modal" data-target="#modalDelete">
                                 <i class="ri-delete-bin-line"></i>
                             </button>
 
                             </div>
                         </td>
-                        <td><a class="btn btn-primary" href="admin-books.html?id=${value.id}" role="button">Xem sản phẩm</a></td>
+                        <td><a class="btn btn-primary" href="admin-books.html?id=${
+                          value.id
+                        }" role="button">Xem sản phẩm</a></td>
                     </tr>`;
       $(".t-body").append(html);
     });
@@ -32,29 +36,28 @@ $.ajax({
     console.error("Error:", status, error);
   });
 
+$(document).ready(function () {
+  $("#add-category-form").submit(function (e) {
+    e.preventDefault();
 
- $(document).ready(function () {
-   $("#add-category").submit(function (e) {
-     e.preventDefault();
-
-     // Lấy giá trị của #tendanhmuc
-     const tendanhmuc = $("#tendanhmuc").val();
-
-     // Gửi yêu cầu Ajax
-     $.ajax({
-       url: "http://localhost:7070/v1/addcategory",
-       type: "POST",
-       data: { tendanhmuc: tendanhmuc }, // Đảm bảo gửi dữ liệu theo dạng object
-     })
-       .done(function (data) {
-          location.reload();
-       })
-       .fail(function () {
-         // Xử lý khi yêu cầu thất bại
-         console.log("loi");
-       });
-   });
- });
+    // Lấy giá trị của #tendanhmuc
+    const tendanhmuc = $("#tendanhmuc").val();
+    console.log(tendanhmuc);
+    //  Gửi yêu cầu Ajax
+    $.ajax({
+      url: "http://localhost:7070/v1/addcategory",
+      type: "POST",
+      data: { tendanhmuc: tendanhmuc }, // Đảm bảo gửi dữ liệu theo dạng object
+    })
+      .done(function (data) {
+        location.reload();
+      })
+      .fail(function () {
+        // Xử lý khi yêu cầu thất bại
+        console.log("loi");
+      });
+  });
+});
 
 function getBYID(id) {
   $.ajax({
@@ -88,34 +91,8 @@ function getBYID(id) {
     });
 }
 
-
-$(document).ready(function () {
-  $("#add-category").submit(function (e) {
-    e.preventDefault();
-
-    // Lấy giá trị của #tendanhmuc
-    const tendanhmuc = $("#tendanhmuc").val();
-
-    // Gửi yêu cầu Ajax
-    $.ajax({
-      url: "http://localhost:7070/v1/addcategory",
-      type: "POST",
-      data: { tendanhmuc: tendanhmuc }, // Đảm bảo gửi dữ liệu theo dạng object
-    })
-      .done(function (data) {
-        location.reload();
-      })
-      .fail(function () {
-        // Xử lý khi yêu cầu thất bại
-        console.log("loi");
-      });
-  });
-});
-
-
-
-$(document).ready(function () {
-  $("#Update").submit(function (event) {
+function Update() {
+  $("#update-category-form").submit(function (event) {
     event.preventDefault();
     const id = $("#id_danhmuc").val();
     const newtendanhmuc = $("#tendanhmuc-up").val();
@@ -126,7 +103,6 @@ $(document).ready(function () {
       data: { tendanhmuc: newtendanhmuc },
       success: function (data) {
         location.reload();
-        
       },
       error: function (xhr, status, error) {
         console.log(xhr.status + ": " + xhr.statusText);
@@ -134,18 +110,18 @@ $(document).ready(function () {
       },
     });
   });
-});
+}
 
-// delete category 
+// delete category
 
 function openConfirmationModal(id) {
   console.log(id);
   $(".button-delete").empty();
   let modalDelete = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                   <button type="button" class="btn btn-danger" onclick="deletecategory(${id})" id="confirmDelete">Xoá</button>`;
-      $(".button-delete").append(modalDelete);
+  $(".button-delete").append(modalDelete);
 }
-function deletecategory(id){
+function deletecategory(id) {
   $.ajax({
     url: `http://localhost:7070/v1/deletecategory/${id}`,
     type: "DELETE",
@@ -158,16 +134,3 @@ function deletecategory(id){
     },
   });
 }
-
-
-        
-
-
-
-
-
-
-
-
-
-
