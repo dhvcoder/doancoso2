@@ -332,7 +332,36 @@
 
 
       <script>
-         $()
+         var targetURL = "admin-dashboard.html";
+
+            // Check if the URL contains admin-dashboard.html
+            if (window.location.pathname.indexOf("admin-dashboard.html") !== -1) {
+               let token = $.cookie("token");
+
+               if (!token) {
+                  redirectTo("index.html");
+               }else{
+                  // Check the token when the page has finished loading
+                  $.ajax({
+                     url: "http://localhost:7070/v2/checkToken",
+                     type: "GET",
+                     headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                     },
+                     success: function (response) {
+                     },
+                     error: function (error) {
+                        // Token invalid, redirect to index.html
+                        redirectTo("index.html");
+                        console.error(error);
+                     },
+                  });
+               }
+            }
+            function redirectTo(url) {
+               window.location.href = url;
+            }
       </script>
    </body>
 </html>

@@ -16,6 +16,7 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="css/responsive.css">
+      <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.6/dist/purify.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
          integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -86,7 +87,7 @@
                                        <span aria-hidden="true">&laquo;</span>
                                     </a>
                                  </li>
-                           
+                                 
                                  <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Next">
                                        <span aria-hidden="true">&raquo;</span>
@@ -121,9 +122,114 @@
       <!-- color-customizer END -->
       <!-- Optional JavaScript -->
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+      
+      
+      
+      <!-- Modal update -->
+      <div class="modal" id="modal-update" tabindex="-1" role="dialog">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Update</h5>
+                  <button type="button" class="close reset-modal" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body body-update">
+                  <form class="forms-sample" id="Update">
+                     <div style="display: none;">
+                        <label for="exampleInputName1" style="display: none;">Sản phẩm</label>
+                        <input type="hidden" id="id_sanphamup" name="id_sanpham" value="" fdprocessedid="bkhvg">
+                     </div>
+                     <div class="form-group">
+                        <label for="exampleInputName1">Sản phẩm</label>
+                        <input type="text" class="form-control" id="tensanphamup" placeholder="Ten san pham" name="tensanpham"
+                           value="" fdprocessedid="bkhvg">
+                     </div>
+
+                     <div class="form-group">
+                        <label for="exampleSelectGender">Danh mục</label>
+                        <select class="form-control select-category" id="selectUp-category" name="id_danhmuc" fdprocessedid="gnn1c7m">
+                           
+                        </select>
+                     </div>
+
+                     <div class="form-group">
+                        <label for="exampleSelectGender">Tac gia</label>
+                        <select class="form-control select-author" id="selectUp-author" name="id_tacgia" fdprocessedid="gnn1c7m">
+                           
+                        </select>
+                     </div>
+                     
+                     <div class="form-group">
+                        <label id="fileInputLabel">File upload</label>
+                        <input class="file-upload-default mt-2" id="fileInput" type="file" name="Files" accept="image/*">
+                     </div>
+
+                     <div class="form-group">
+                        <label for="exampleInputEmail3">Giá</label>
+                        <input type="number" class="form-control" id="giaup" placeholder="Gia" name="gia" value=""
+                           fdprocessedid="y3x8hjk">
+                     </div>
+
+                     <div class="form-group">
+                        <label for="exampleInputEmail3">Số lượng</label>
+                        <input type="number" class="form-control" id="soluongup" placeholder="Soluong" name="soluong" value=""
+                           fdprocessedid="y3x8hjk">
+                     </div>
+
+
+                     <div class="form-group">
+                        <label for="exampleTextarea1">Mô tả</label>
+                        <textarea class="form-control" id="motaup" name="mota" rows="4"> </textarea>
+                     </div>
+                     
+                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary reset-modal" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật tại đây</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+
+
+
+      <!-- modal delete -->
+      <!-- Modal Xoá -->
+      <div class="modal" id="modalDelete">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <!-- Modal Header -->
+               <div class="modal-header">
+                  <h4 class="modal-title">Xác nhận xoá</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+      
+               <!-- Modal Body -->
+               <div class="modal-body">
+                  <p>Bạn có chắc chắn muốn xoá không?</p>
+               </div>
+      
+               <!-- Modal Footer -->
+               <div class="modal-footer button-delete">
+      
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+
+
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
+      <script src="js/pagination.js"></script>
       <script src="js/jquery.dataTables.min.js"></script>
       <script src="js/dataTables.bootstrap4.min.js"></script>
       <!-- Appear JavaScript -->
@@ -176,28 +282,10 @@
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
       <script src="js/adminproduct.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
+      
       <script>
-         $(document).ready(function () {
-            $("#addcategory").on('click', function (e) {
-               e.preventDefault();
-               $.ajax({
-                  url: "admin-add-category.html",
-                  method: "GET",
-                  success: function (data) {
-                     $("#content-page").html(data);
-
-                     // Assuming ".content-category" is a child element of "#content-page"
-                     // $(".content-category").remove();
-                  },
-                  error: function (xhr, status, error) {
-                     console.error(error);
-                  }
-               });
-            });
-         });
-      </script><script>
          $(document).ready(function () {
             $("#add-product").on('click', function (e) {
                e.preventDefault();
@@ -215,6 +303,13 @@
                   }
                });
             });
+            $(".reset-modal").on('click', function (e) {
+               e.preventDefault();
+              $("#selectUp-category").empty();
+               $("#selectUp-author").empty();
+               ShowCategory();
+               showAuthor();
+            })
          });
       </script>
    </body>

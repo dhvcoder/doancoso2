@@ -15,6 +15,9 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>;
    </head>
    <body>
       <!-- loader Start -->
@@ -33,18 +36,18 @@
                           <div class="sign-in-from bg-primary rounded">
                               <h3 class="mb-0 text-center text-white">Sign Up</h3>
                               <p class="text-center text-white">Enter your email address and password to access admin panel.</p>
-                              <form class="mt-4 form-text">
+                              <form class="mt-4 form-text" id="form-signUp">
                                   <div class="form-group">
                                       <label for="exampleInputEmail1">Your Full Name</label>
-                                      <input type="email" class="form-control mb-0" id="exampleInputEmail1" placeholder="Your Full Name">
+                                      <input type="text" class="form-control mb-0" id="fullname" name="fullname" placeholder="Your Full Name">
                                   </div>
                                   <div class="form-group">
                                       <label for="exampleInputEmail2">Email address</label>
-                                      <input type="email" class="form-control mb-0" id="exampleInputEmail2" placeholder="Enter email">
+                                      <input type="email" class="form-control mb-0" id="email" name="email" placeholder="Enter email">
                                   </div>
                                   <div class="form-group">
                                       <label for="exampleInputPassword1">Password</label>
-                                      <input type="password" class="form-control mb-0" id="exampleInputPassword1" placeholder="Password">
+                                      <input type="password" class="form-control mb-0" id="pass" name="pass" placeholder="Password">
                                   </div>
                                   <div class="d-inline-block w-100">
                                       <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
@@ -131,5 +134,37 @@
       <script src="js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
+      <script src="js/handleSignup.js"></script>
+      <script>
+       var pattern = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/;
+        $(document).ready(function () {
+                $("#form-signUp").submit(function (e) {
+                    e.preventDefault();
+                    const fullname = $("#fullname").val();
+                    const email = $("#email").val();
+                    const pass = $("#pass").val();
+                    if(pattern.test(email)){
+                         $.ajax({
+                            url: "http://localhost:7070/v2/signup",
+                            type: "POST",
+                            data: {
+                                username: fullname,
+                                email: email,
+                                password: pass,
+                            },
+                        })
+                            .done(function (response) {
+                                window.location.href = "sign-in.html";
+                            })
+                            .fail(function () {
+                                // Xử lý khi yêu cầu thất bại
+                                console.log("loi");
+                            });
+                    }else{
+                        alert("Email kh đúng đinhj dạng")
+                    }
+                });
+            });
+      </script>
    </body>
 </html>

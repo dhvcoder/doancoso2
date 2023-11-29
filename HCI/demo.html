@@ -4,68 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Pagination Example</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include jQuery Pagination Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-pagination/1.2.7/jquery.pagination.min.js"></script>
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="iq-card">
-                <div class="iq-card-header d-flex justify-content-between">
-                    <div class="iq-header-title">
-                        <h4 class="card-title">Thêm tác giả</h4>
-                    </div>
-                </div>
-                <div class="iq-card-body">
-                    <form id="form-add-author" method="post">
-                        <div class="form-group">
-                            <label>Tên tác giả:</label>
-                            <input type="text" class="form-control" id="tentacgia" name="tentacgia">
-                        </div>
-                        <div class="form-group">
-                            <label>Nội dung:</label>
-                            <textarea id="editor" class="form-control" rows="4" id="mota" name="mota"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Gửi</button>
-                        <button type="reset" class="btn btn-danger">Trở lại</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <div id="dataContainer"></div>
+
+    <nav aria-label="Page navigation example" class="d-flex flex-row-reverse">
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
 
     <script>
-        $(document).ready(function () {
-            $("#form-add-author").submit(function (e) {
-                e.preventDefault();
+        // Mock template function
+        function template(data) {
+            var result = "<ul>";
+            for (var i = 0; i < data.length; i++) {
+                result += "<li>" + data[i] + "</li>";
+            }
+            result += "</ul>";
+            return result;
+        }
 
-                // Lấy giá trị của #tendanhmuc
-                const tentacgia = $("#tentacgia").val();
-                const mota = $("#editor").val();
+        var dataContainer = $('#dataContainer');
 
-                // Gửi yêu cầu Ajax
-                $.ajax({
-                    url: "http://localhost:7070/v3/insertAuthor",
-                    type: "POST",
-                    data: { 
-                        tentacgia: tentacgia,
-                        mota: mota 
-                    
-                        }, // Đảm bảo gửi dữ liệu theo dạng object
-                    success: function (data) {
-                        alert('thanh cong');
-                    },
-                    error: function () {
-                        console.log("loi");
-                    }
-                });
-            });
+        // Initialize pagination
+        $('#pagination').pagination({
+            dataSource: Array.from({ length: 195 }, (_, i) => i + 1),
+            pageSize: 10, // Adjust the number of items per page as needed
+            callback: function (data, pagination) {
+                // Call your template method
+                var html = template(data);
+                dataContainer.html(html);
+            }
         });
     </script>
+
 </body>
 
 </html>

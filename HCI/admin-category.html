@@ -16,6 +16,8 @@
       <link rel="stylesheet" href="css/style.css">
       <!-- Responsive CSS -->
       <link rel="stylesheet" href="css/responsive.css">
+      <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.6/dist/purify.min.js"></script>
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
          integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -102,7 +104,7 @@
             <div class="modal-content">
                <div class="modal-header">
                   <h5 class="modal-title">Update</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" class="close reset-modal" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                   </button>
                </div>
@@ -111,11 +113,13 @@
                      <div class="form-group">
                         <input type="text" class="form-control" id="id_danhmuc" placeholder="Ten Danh Muc" name="id_danhmuc"
                            value="" fdprocessedid="bkhvg" style="display: none;">
-                        <label for="exampleInputName1">Danh Muc</label>
+                        <div class="lable">
+                           <label for="exampleInputName1">Danh Muc</label>
+                        </div>
                         <input type="text" class="form-control" id="tendanhmuc-up" placeholder="Ten Danh Muc"
                            name="tendanhmuc-up" value="" fdprocessedid="bkhvg">
                         <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                           <button type="button" class="btn btn-secondary reset-modal" data-dismiss="modal">Hủy</button>
                            <button type="submit" class="btn btn-danger" id="confirmDelete">Cập nhật</button>
                         </div>
                      </div>
@@ -220,6 +224,7 @@
       <script src="js/custom.js"></script>
       <script src="js/category.js"></script>
       <script src="js/bootstrap.min.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
       <script>
          $(document).ready(function () {
             $("#addcategory").on('click', function (e) {
@@ -238,6 +243,11 @@
                   }
                });
             });
+
+            $(".reset-modal").on('click' , function(e){
+               e.preventDefault();
+                $(".error").empty();   
+            })
          });
       </script>
 

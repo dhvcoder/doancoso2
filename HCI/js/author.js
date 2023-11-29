@@ -1,7 +1,12 @@
+var token = $.cookie("token");
 function showAuthor() {
   $.ajax({
     url: `http://localhost:7070/v3/getAuthor`,
     type: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
   })
     .done(function (data) {
       let stt = 1;
@@ -58,15 +63,22 @@ $(document).ready(function () {
         $.ajax({
           url: "http://localhost:7070/v3/insertAuthor",
           type: "POST",
-          data: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data:{
             tentacgia: tentacgia,
             mota: mota,
           },
           success: function (data) {
             location.reload();
           },
-          error: function () {
-            console.log("loi");
+          error: function (error) {
+             swal({
+               icon: "error",
+               text: "Error:" + error.responseText,
+             });
+            console.log(error.status);
           },
         });
       });
@@ -86,6 +98,10 @@ function GetByID(id) {
   $.ajax({
     url: `http://localhost:7070/v3/getByID/${id}`,
     type: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
   })
     .done(function (data) {
       data.forEach((value) => {
@@ -114,15 +130,40 @@ function deleteAuthor(id) {
   $.ajax({
     url: `http://localhost:7070/v3/deleteAuthor/${id}`,
     type: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
     success: function (data) {
       location.reload();
     },
-    error: function (xhr, status, error) {
+    error: function (xhr) {
       console.log(xhr.status + ": " + xhr.statusText);
-      // Handle the error appropriately
+
+      // Handle the error appropriately based on HTTP status code
+      if (xhr.status === 401) {
+        swal({
+          icon: "error",
+          text: "Unauthorized: Không có quyền xóa tác giả.",
+        });
+      } else if (xhr.status === 500) {
+        swal({
+          icon: "error",
+          text: "Internal Server Error: Không thể xóa tác giả.",
+        });
+      } else {
+        // Handle other status codes if needed
+        swal({
+          icon: "error",
+          text: "Unexpected error: " + xhr.status,
+        });
+      }
+
+      $("#modalDelete").modal("hide");
     },
   });
 }
+
 
 $("#Update").submit(function (e) {
   e.preventDefault();
@@ -134,16 +175,32 @@ $("#Update").submit(function (e) {
   $.ajax({
     url: `http://localhost:7070/v3/updateAuthor/${id}`,
     type: "PUT",
-    data: {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify({
       id: id,
       tentacgia: tentacgia,
       mota: mota,
-    },
+    }),
     success: function (data) {
       location.reload();
     },
-    error: function () {
-      console.log("loi");
+    error: function (xhr) {
+        if (xhr.status === 401) {
+        swal({
+          icon: "error",
+          text: "Unauthorized: Không có quyền xóa tác giả.",
+        })
+      }
+      else{
+        swal({
+          icon: "error",
+          text: "Unexpected error: " + xhr.status,
+        });
+      }
+
     },
   });
 });

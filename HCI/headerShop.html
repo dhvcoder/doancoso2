@@ -1,47 +1,50 @@
+<style>
+    .hidden {
+    display: none;
+    }
+</style>
 <div class="iq-sidebar">
     <div class="iq-sidebar-logo d-flex justify-content-between">
-        <a href="admin-dashboard.html" class="header-logo">
+        <a href="index.html" class="header-logo">
             <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
             <div class="logo-title">
                 <span class="text-primary text-uppercase">NHASACHTV</span>
             </div>
         </a>
-        <div class="iq-menu-bt-sidebar">
-            <div class="iq-menu-bt align-self-center">
-                <div class="wrapper-menu">
-                    <div class="main-circle"><i class="las la-bars"></i></div>
-                </div>
-            </div>
-        </div>
     </div>
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
-                <li><a href="admin-dashboard.html"><i class="las la-home iq-arrow-left"></i>Bảng Điều Khiển</a></li>
-                <li><a href="admin-category.html"><i class="ri-record-circle-line"></i>Danh Mục Sách</a></li>
-                <li><a href="admin-author.html"><i class="ri-record-circle-line"></i>Tác Giả</a></li>
-                <!-- <li><a href="admin-books.html"><i class="ri-record-circle-line"></i>Sách</a></li> -->
-                <li class="">
-                    <a href="#userinfo" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
-                            class="ripple rippleEffect"></span><i class="las la-user-tie iq-arrow-left"></i><span>User</span><i
-                            class="ri-arrow-right-s-line iq-arrow-right"></i></a>
-                    <ul id="userinfo" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
-                        <li><a href="profile-edit.html"><i class="las la-edit"></i>User Edit</a></li>
-                        <li><a href="user-list.html"><i class="las la-th-list"></i>User List</a></li>
+                <li class="active active-menu">
+                    <a href="#dashboard" class="iq-waves-effect" data-toggle="collapse" aria-expanded="true"><span
+                            class="ripple rippleEffect"></span><i class="las la-home iq-arrow-left"></i><span>Trang
+                            Chủ</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                    <ul id="dashboard" class="iq-submenu collapse show" data-parent="#iq-sidebar-toggle">
                     </ul>
                 </li>
+                <li >
+                    <a href="#ui-elements" class="iq-waves-effect collapsed" data-toggle="collapse"
+                        aria-expanded="false"><i class="lab la-elementor iq-arrow-left"></i><span>Danh mục sản
+                            phẩm</span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                    <ul id="ui-elements" class="iq-submenu collapse category" data-parent="#iq-sidebar-toggle">
+                        
+                    </ul>
+                </li>
+                <li><a href="book-page.html"><i class="ri-book-line"></i>Yêu Thích</a></li>
+                <li><a href="book-pdf.html"><i class="ri-book-line"></i>Sách PDF</a></li>
+                <li class="buttonSign-in"><a href="sign-in.html"><i class="ri-book-line"></i>Login</a></li>
+                <li class="hidden" id="db">
+                    <a href="#admin" class="iq-waves-effect" data-toggle="collapse" aria-expanded="false"><span
+                        class="ripple rippleEffect"></span><i class="ri-admin-line"></i><span>Admin</span><i
+                        class="ri-arrow-right-s-line iq-arrow-right"></i>
+                    </a>
+                    <ul id="admin" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                        <li><a href=""><i class="ri-dashboard-line"></i>Dashboard</a></li>
+                    </ul>
+                </li>
+
             </ul>
         </nav>
-        <div id="sidebar-bottom" class="p-3 position-relative">
-            <div class="iq-card">
-                <div class="iq-card-body">
-                    <div class="sidebarbottom-content">
-                        <div class="image"><img src="images/page-img/side-bkg.png" alt=""></div>
-                        <button type="submit" class="btn w-100 btn-primary mt-4 view-more">Become Membership</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!-- TOP Nav Bar -->
@@ -56,19 +59,13 @@
                     <a href="index.html" class="header-logo">
                         <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
                         <div class="logo-title">
-                            <span class="text-primary text-uppercase">NHASACHTV</span>
+                            <span class="text-primary text-uppercase">img01</span>
                         </div>
                     </a>
                 </div>
             </div>
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Có quyền quản lí</h5>
-                <nav aria-label="breadcrumb">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Quản lí sản phẩm</li>
-                    </ul>
-                </nav>
+                <h5 class="mb-0">Trang Chủ</h5>
             </div>
             <div class="iq-search-bar">
                 <form action="#" class="searchbox">
@@ -106,7 +103,7 @@
                                     <a href="#" class="iq-sub-card">
                                         <div class="media align-items-center">
                                             <div class="">
-                                                <img class="avatar-40 rounded" src="images/user/01.jpg" alt="">
+                                                <img class="avatar-40 rounded" src="images/user/1.jpg" alt="">
                                             </div>
                                             <div class="media-body ml-3">
                                                 <h6 class="mb-0 ">Đơn hàng giao thành công</h6>
@@ -226,9 +223,57 @@
                             </div>
                         </div>
                     </li>
-                    <li class="line-height pt-3">
+                    <li class="nav-item nav-icon dropdown">
+                        <a href="#" class="search-toggle iq-waves-effect text-gray rounded">
+                            <i class="ri-shopping-cart-2-line"></i>
+                            <span class="badge badge-danger count-cart rounded-circle">2</span>
+                        </a>
+                        <div class="iq-sub-dropdown">
+                            <div class="iq-card shadow-none m-0">
+                                <div class="iq-card-body p-0 toggle-cart-info">
+                                    <div class="bg-primary p-3">
+                                        <h5 class="mb-0 text-white">Giỏ Hàng<small
+                                                class="badge  badge-light float-right pt-1">2</small></h5>
+                                    </div>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="rounded" src="images/cart/01.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">Night People book</h6>
+                                                <p class="mb-0">$32</p>
+                                            </div>
+                                            <div class="float-right font-size-24 text-danger"><i
+                                                    class="ri-close-fill"></i></div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="iq-sub-card">
+                                        <div class="media align-items-center">
+                                            <div class="">
+                                                <img class="rounded" src="images/cart/02.jpg" alt="">
+                                            </div>
+                                            <div class="media-body ml-3">
+                                                <h6 class="mb-0 ">The Sin Eater Book</h6>
+                                                <p class="mb-0">$40</p>
+                                            </div>
+                                            <div class="float-right font-size-24 text-danger"><i
+                                                    class="ri-close-fill"></i></div>
+                                        </div>
+                                    </a>
+                                    <div class="d-flex align-items-center text-center p-3">
+                                        <a class="btn btn-primary mr-2 iq-sign-btn" href="checkout.html"
+                                            role="button">Giỏ Hàng</a>
+                                        <a class="btn btn-primary iq-sign-btn" href="checkout.html" role="button">Thanh
+                                            Toán</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="line-height pt-3 hidden" id="account">
                         <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
-                            <img src="images/user/1.jpg" class="img-fluid rounded-circle mr-3" alt="user">
+                            <img src="images/user/avata.jpg" class="img-fluid rounded-circle mr-3" alt="user">
                             <div class="caption">
                                 <h6 class="mb-1 line-height name-user"></h6>
                                 <p class="mb-0 text-primary">Tài Khoản</p>
@@ -238,9 +283,9 @@
                             <div class="iq-card shadow-none m-0">
                                 <div class="iq-card-body p-0 ">
                                     <div class="bg-primary p-3">
-                                        <h5 class="mb-0 text-white line-height name-user"></h5>
+                                        <h5 class="mb-0 text-white line-height name-user">Xin Chào</h5>
                                     </div>
-                                    <a href="profile.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <a href="profile-edit.html" class="iq-sub-card iq-bg-primary-hover">
                                         <div class="media align-items-center">
                                             <div class="rounded iq-card-icon iq-bg-primary">
                                                 <i class="ri-file-user-line"></i>
@@ -260,7 +305,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a href="account-setting.html" class="iq-sub-card iq-bg-primary-hover">
+                                    <a href="#" class="iq-sub-card iq-bg-primary-hover">
                                         <div class="media align-items-center">
                                             <div class="rounded iq-card-icon iq-bg-primary">
                                                 <i class="ri-account-box-line"></i>
@@ -271,7 +316,7 @@
                                         </div>
                                     </a>
                                     <div class="d-inline-block w-100 text-center p-3">
-                                        <a class="bg-primary iq-sign-btn" href="" id="sign-out" role="button">Sign out<i
+                                        <a class="bg-primary iq-sign-btn" id="sign-out" role="button">Sign out<i
                                                 class="ri-login-box-line ml-2"></i></a>
                                     </div>
                                 </div>
@@ -283,52 +328,7 @@
         </nav>
     </div>
 </div>
-
+<script src="js/headerShop.js"></script>
 <script>
-    var token = $.cookie("token");
-    var user = $.cookie("username");
-    if(!token){
-        location.href = "sign-in.html";
-    }else{
-        $.ajax({
-            url: "http://localhost:7070/v2/checkToken",
-            type: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-            success: function (response) {
-                $(".name-user").text("Xin chao " + user);
-            },
-            error: function (error) {
-                location.href = "index.html";
-                console.error(error);
-            },
-        });
-    }
-
-    $("#sign-out").on("click", function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: `http://localhost:7070/v2/logout`,
-                type: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                success: function (response) {
-                    $.removeCookie("token", { path: "/" });
-                    $.removeCookie("username", { path: "/" });
-                    alert(response);
-                    location.href = "sign-in.html";
-                },
-                error: function (error) {
-                    // Show an alert and log the error if the token is not valid
-                    alert("Bạn không có quyền truy cập");
-                    console.error(error);
-                },
-            }); // Remove the trailing comma here
-        });
-
 
 </script>

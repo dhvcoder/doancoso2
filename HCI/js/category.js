@@ -1,6 +1,10 @@
+var token = $.cookie("token");
 $.ajax({
   url: "http://localhost:7070/v1/getcategory",
   type: "GET",
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
 })
   .done(function (data) {
     let stt = 1;
@@ -36,26 +40,44 @@ $.ajax({
     console.error("Error:", status, error);
   });
 
+
+
+
+  let labelAdded = false;
 $(document).ready(function () {
   $("#add-category-form").submit(function (e) {
     e.preventDefault();
 
     // Lấy giá trị của #tendanhmuc
-    const tendanhmuc = $("#tendanhmuc").val();
-    console.log(tendanhmuc);
-    //  Gửi yêu cầu Ajax
-    $.ajax({
-      url: "http://localhost:7070/v1/addcategory",
-      type: "POST",
-      data: { tendanhmuc: tendanhmuc }, // Đảm bảo gửi dữ liệu theo dạng object
-    })
-      .done(function (data) {
-        location.reload();
+    const tendanhmuc = DOMPurify.sanitize($("#tendanhmuc").val(), {
+      ALLOWED_TAGS: [],
+    });
+
+    if (!tendanhmuc.trim()) {
+      if (!labelAdded) {
+        let html = `<label style="color: red;">Nhập đúng và Không được để trống</label>`;
+        $(".lable").append(html);
+        labelAdded = true;
+      }
+      return;
+    } else {
+      //  Gửi yêu cầu Ajax
+      $.ajax({
+        url: "http://localhost:7070/v1/addcategory",
+        type: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: { tendanhmuc: tendanhmuc }, // Đảm bảo gửi dữ liệu theo dạng object
       })
-      .fail(function () {
-        // Xử lý khi yêu cầu thất bại
-        console.log("loi");
-      });
+        .done(function (data) {
+          location.reload();
+        })
+        .fail(function () {
+          // Xử lý khi yêu cầu thất bại
+          console.log("loi");
+        });
+    }
   });
 });
 
@@ -63,16 +85,8 @@ function getBYID(id) {
   $.ajax({
     url: `http://localhost:7070/v1/getcategory/${id}`,
     type: "GET",
-    statusCode: {
-      401: function () {
-        // Xử lý khi trạng thái là 401 Unauthorized
-        console.log("Unauthorized");
-      },
-      500: function () {
-        // Xử lý khi trạng thái là 500 Internal Server Error
-        console.log("Internal Server Error");
-      },
-      // Thêm các trạng thái khác nếu cần
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
     .done(function (data) {
@@ -88,29 +102,46 @@ function getBYID(id) {
     .fail(function () {
       // Xử lý khi yêu cầu thất bại với các trạng thái không được xử lý bởi statusCode
       console.log("Unhandled Error");
+      
     });
 }
 
-function Update() {
-  $("#update-category-form").submit(function (event) {
-    event.preventDefault();
-    const id = $("#id_danhmuc").val();
-    const newtendanhmuc = $("#tendanhmuc-up").val();
-
+$("#update-category-form").submit(function (event) {
+  event.preventDefault();
+  const id = $("#id_danhmuc").val();
+  const newtendanhmuc = DOMPurify.sanitize($("#tendanhmuc-up").val(), {
+    ALLOWED_TAGS: [],
+  });
+  if (!newtendanhmuc.trim()) {
+    if (!labelAdded) {
+      let html = `<label class = "error" style="color: red;">Nhập đúng và Không được để trống</label>`;
+      $(".lable").append(html);
+      labelAdded = true;
+    }
+    return;
+  } else {
     $.ajax({
       url: `http://localhost:7070/v1/updatecategory/${id}`, // Make sure to use the correct URL
       type: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       data: { tendanhmuc: newtendanhmuc },
       success: function (data) {
         location.reload();
       },
-      error: function (xhr, status, error) {
+      error: function (xhr) {
+        swal({
+          icon: "error",
+          text: "Error:" + xhr.responseText,
+        });
+        $("#update").modal("hide");
         console.log(xhr.status + ": " + xhr.statusText);
         // Handle the error appropriately
       },
     });
-  });
-}
+  }
+});
 
 // delete category
 
@@ -125,12 +156,19 @@ function deletecategory(id) {
   $.ajax({
     url: `http://localhost:7070/v1/deletecategory/${id}`,
     type: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     success: function (data) {
       location.reload();
     },
-    error: function (xhr, status, error) {
+    error: function (xhr) {
       console.log(xhr.status + ": " + xhr.statusText);
-      // Handle the error appropriately
+      swal({
+        icon: "error",
+        text: "Error:" + xhr.responseText,
+      });
+      $("#modalDelete").modal("hide");
     },
   });
 }
