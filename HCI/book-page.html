@@ -48,8 +48,8 @@
                               <div class="col-md-6">
                                  <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
                                     <div class="iq-card-body p-0">
-                                       <div class="row align-items-center">
-                                          <div class="col-3">
+                                       <div class="row text-center d-flex justify-content-center">
+                                          <!-- <div class="col-3">
                                              <ul id="description-slider-nav" class="list-inline p-0 m-0  d-flex align-items-center">
                                                 <li>
                                                    <a href="javascript:void(0);">
@@ -80,41 +80,12 @@
                                                    <a href="javascript:void(0);">
                                                    <img src="images/book-dec/06.jpg" class="img-fluid rounded w-100" alt="">
                                                    </a>
-                                                </li>
+                                                </li>md
                                              </ul>
-                                          </div>
-                                          <div class="col-9">
-                                             <ul id="description-slider" class="list-inline p-0 m-0  d-flex align-items-center">
-                                                <li>
-                                                   <a href="javascript:void(0);">
-                                                   <img src="images/new_realeases/img01.jpg" class="img-fluid w-100 rounded" alt="">
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a href="javascript:void(0);">
-                                                   <img src="images/book-dec/02.jpg" class="img-fluid w-100 rounded" alt="">
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a href="javascript:void(0);">
-                                                   <img src="images/book-dec/03.jpg" class="img-fluid w-100 rounded" alt="">
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a href="javascript:void(0);">
-                                                   <img src="images/book-dec/04.jpg" class="img-fluid w-100 rounded" alt="">
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a href="javascript:void(0);">
-                                                   <img src="images/book-dec/05.jpg" class="img-fluid w-100 rounded" alt="">
-                                                   </a>
-                                                </li>
-                                                <li>
-                                                   <a href="javascript:void(0);">
-                                                   <img src="images/book-dec/06.jpg" class="img-fluid w-100 rounded" alt="">
-                                                   </a>
-                                                </li>
+                                          </div> -->
+                                          <div class="col-md-8 col-sm-10 p-0 position-relative image-overlap-shadow">
+                                             <ul id="description-slider" class="list-inline p-0 m-0 d-flex align-items-center img_product">
+                                                
                                              </ul>
                                           </div>
                                        </div>
@@ -124,10 +95,10 @@
                               <div class="col-md-6">
                                  <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
                                     <div class="iq-card-body p-0">
-                                       <h3 class="mb-3 nameproduct">Payback Time - Ngày Đòi Nợ</h3>
+                                       <h3 class="mb-3 nameproduct"></h3>
                                        <div class="price d-flex align-items-center font-weight-500 mb-2">
                                           <span class="font-size-20 pr-2 old-price">100$</span>
-                                          <span class="font-size-24 text-dark price"></span>
+                                          <span class="font-size-24 text-dark" id="price"></span>
                                        </div>
                                        <div class="mb-3 d-block">
                                           <span class="font-size-20 text-warning">
@@ -138,16 +109,17 @@
                                           <i class="fa fa-star"></i>
                                           </span>
                                        </div>
-                                       <div class="d-block">
-                                          <span class="text-dark mb-4 pb-4 iq-border-bottom">"Trong chứng khoán và thị trường tài chính, dám tham gia đầu
-                                             tư cũng là một thành công tâm lý ban đầu. Dù vậy, 95% nhà đầu tư Việt Nam thuộc nhóm nhà đầu tư nhỏ lẻ với vốn kiến
-                                             thức tài chính vô cùng hạn chế. Họ tham gia vào thị trường chứng khoán với 100% ý chí và sự quyết tâm chiến thắng thị
-                                             trường, nhưng thật không may mắn kết cục cuối cùng của họ luôn là sự thất bại và mất tiền.</span>
+                                       <div class="d-block mota">
+                                         <!-- mota -->
                                        </div>
-                                       <div class="text-primary mb-4">Tác giả: <span class="text-body">HappyLive</span></div>
+                                       <div class="text-primary my-3 mb-4">Tác giả: <span class="text-body nameauthor"></span></div>
                                        <div class="mb-4 d-flex align-items-center">                                       
-                                          <a href="checkout.html" class="btn btn-primary view-more mr-2">Thêm vào giỏ hàng</a>
-                                          <a href="book-pdf.html" class="btn btn-primary view-more mr-2">Mua ngay</a>
+                                          <a href="" class="btn btn-primary view-more mr-2 addcard">Thêm vào giỏ hàng</a>
+                                       <div class="col-sm-7 col-md-6">
+                                          <button type="button" class="fa fa-minus qty-btn" id="btn-minus"></button>
+                                          <input type="text" id="quantity" value="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                          <button type="button" class="fa fa-plus qty-btn" id="btn-plus"></button>
+                                       </div>
                                        </div>
                                        <div class="mb-3">
                                           <a href="#" class="text-body text-center"><span class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i class="ri-heart-fill"></i></span><span>Thêm vào danh sách yêu thích</span></a>
@@ -669,5 +641,9 @@
       <script src="js/chart-custom.js"></script>
       <!-- Custom JavaScript -->
       <script src="js/custom.js"></script>
+      <script src="js/bookpage.js"></script>
+      <script src="js/headerShop.js"></script>
+      <script>
+      </script>
    </body>
 </html>

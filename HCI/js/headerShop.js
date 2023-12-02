@@ -74,3 +74,39 @@ $.ajax({
     console.error("Error:", status, error);
   });
 
+function GetCard() {
+  $.ajax({
+    url: `http://localhost:7070/v4/getCardItem`,
+    type: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .done(function (response) {
+      $("#card_item").html("");
+      response.data.forEach(value => {
+        let html = `  <a href="#" class="iq-sub-card">
+                                            <div class="media align-items-center">
+                                                <div class="">
+                                                    <img class="rounded" src="https://drive.google.com/uc?id=${value.img}" alt="">
+                                                </div>
+                                                <div class="media-body ml-3">
+                                                    <h6 class="mb-0 mt-2">${value.ten}</h6>
+                                                    <p class="mb-0 mt-2">${value.gia} $</p>
+                                                    <div class="d-flex mt-2">Số lượng :
+                                                        <p class="ml-2">${value.soluong}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="float-right font-size-24 text-danger"><i class="ri-close-fill"></i></div>
+                                            </div>
+                                        </a>`;
+            $("#card_item").append(html);
+      })
+      $(".totalCard").text(response.totalCard);
+    })
+    .fail(function (error) {
+      alert("LOI:" + error.responseText);
+      console.error("Error:" + error);
+    });
+}
+GetCard();

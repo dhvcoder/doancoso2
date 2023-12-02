@@ -462,7 +462,7 @@
                },
             })
                .done(function (data) {
-                  // Xử lý dữ liệu đã nhận được từ API khi yêu cầu thành công
+                  console.log(data);
                   data.forEach((value) => {
                      let html = `<div class="col-sm-6 col-md-4 col-lg-3">
                                  <div class="iq-card iq-card-block iq-card-stretch iq-card-height browse-bookcontent">
@@ -471,13 +471,13 @@
                                           <div class="col-6 p-0 position-relative image-overlap-shadow">
                                              <a href="javascript:void();"><img class="img-fluid rounded w-100" src="https://drive.google.com/uc?id=${value.img}" alt=""></a>
                                              <div class="view-book">
-                                                <a href="book-page.html" class="btn btn-sm btn-white">Mua Ngay</a>
+                                                <a href="book-page.html?idProduct=${value.id_sanpham}" class="btn btn-sm btn-white">Mua Ngay</a>
                                              </div>
                                           </div>
                                           <div class="col-6">
                                              <div class="mb-2">
-                                                <h6 class="mb-1">Bí Quyết Làm Giàu Của Napoleon Hill (Tái Bản 2019)</h6>
-                                                <p class="font-size-13 line-height mb-1">Napoleon Hill</p>
+                                                <h6 class="mb-1">${value.ten}</h6>
+                                                <p class="font-size-13 line-height mb-1">${value.tentacgia}</p>
                                                 <div class="d-block line-height">
                                                    <span class="font-size-11 text-warning">
                                                       <i class="fa fa-star"></i>
@@ -489,7 +489,7 @@
                                                 </div>
                                              </div>
                                              <div class="price d-flex align-items-center">
-                                                <h6><b>79.000 đ</b></h6>
+                                                <h6><b>${value.gia}</b></h6>
                                              </div>
                                              <div class="iq-product-action">
                                                 <a href="javascript:void();"><i class="ri-shopping-cart-2-fill text-primary"></i></a>
