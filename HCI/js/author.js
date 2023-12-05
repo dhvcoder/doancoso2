@@ -58,8 +58,6 @@ $(document).ready(function () {
 
         // Get the value from the editor
         const mota = editor.getData();
-        console.log(tentacgia, mota);
-
         $.ajax({
           url: "http://localhost:7070/v3/insertAuthor",
           type: "POST",

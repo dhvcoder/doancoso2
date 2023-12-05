@@ -6,8 +6,6 @@ $(document).ready(function () {
     $("#account").removeClass("hidden");
     $("#db").removeClass("hidden");
     $(".buttonSign-in").addClass("hidden");
-  }
-  if (user) {
     $(".name-user").text("Xin chao " + user);
   }
 });
@@ -48,7 +46,10 @@ function checkToken() {
     },
     error: function (error) {
       // Show an alert and log the error if the token is not valid
-      alert("Lỗi: " + error.responseText);
+      swal({
+        icon: "error",
+        text: "Unauthorized:" + error.responseText,
+      });
       console.error(error);
     },
   });
@@ -56,7 +57,6 @@ function checkToken() {
 
 $("#admin").on("click", function (e) {
   e.preventDefault();
-  // Call the function to check the token when the #admin element is clicked
   checkToken();
 });
 
@@ -75,17 +75,20 @@ $.ajax({
   });
 
 function GetCard() {
-  $.ajax({
-    url: `http://localhost:7070/v4/getCardItem`,
-    type: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .done(function (response) {
-      $("#card_item").html("");
-      response.data.forEach(value => {
-        let html = `  <a href="#" class="iq-sub-card">
+  if (!token) {
+    return;
+  } else {
+    $.ajax({
+      url: `http://localhost:7070/v4/getCardItem`,
+      type: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .done(function (response) {
+        $("#card_item").html("");
+        response.data.forEach((value) => {
+          let html = `<div class="iq-sub-card">
                                             <div class="media align-items-center">
                                                 <div class="">
                                                     <img class="rounded" src="https://drive.google.com/uc?id=${value.img}" alt="">
@@ -97,16 +100,19 @@ function GetCard() {
                                                         <p class="ml-2">${value.soluong}</p>
                                                     </div>
                                                 </div>
-                                                <div class="float-right font-size-24 text-danger"><i class="ri-close-fill"></i></div>
                                             </div>
-                                        </a>`;
-            $("#card_item").append(html);
+                                        </div>`;
+          $("#card_item").append(html);
+        });
+        $(".totalCard").text(response.totalCard);
       })
-      $(".totalCard").text(response.totalCard);
-    })
-    .fail(function (error) {
-      alert("LOI:" + error.responseText);
-      console.error("Error:" + error);
-    });
+      .fail(function (error) {
+        swal({
+          icon: "error",
+          text: "Unauthorized:" + error.responseText,
+        });
+        console.error("Error:" + error);
+      });
+  }
 }
 GetCard();

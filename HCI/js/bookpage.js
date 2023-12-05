@@ -60,7 +60,10 @@ function insertCard(id_product, soluong) {
       GetCard();
     })
     .fail(function (error) {
-      alert("LOI:" + error.responseText);
+      swal({
+        icon: "error",
+        text: "Unauthorized:" + error.responseText,
+      });
       console.error("Error:" + error);
     });
 }
@@ -70,7 +73,6 @@ $(document).ready(function () {
   $(".addcard").on("click", function (e) {
     e.preventDefault();
     if (!token) {
-      alert("Ban chua dang nhapp");
       window.location.href = "sign-in.html";
     } else {
       insertCard(id_product, soluong);

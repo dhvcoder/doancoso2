@@ -102,6 +102,7 @@ ClassicEditor.create(document.querySelector("#editormota"))
   });
 
 // add-product
+
 var formadd = document.getElementById("form-add-product");
 
 $(formadd).submit(function (e) {
